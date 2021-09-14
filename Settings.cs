@@ -3,13 +3,13 @@ using System.ComponentModel;
 using VE3NEA.HamCockpit.PluginHelpers;
 
 namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
-    enum RigEnum : int {
+/*    enum RigEnum : int {
         [Description("Rig #1")]
         RIG1 = 0,
 
         [Description("Rig #2")]
         RIG2 = 1
-    }
+    }*/
 
     enum AttenuationLevelEnum : int {       
         [Description("0 dB (HF AGC mode)")]
@@ -46,7 +46,7 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
     class Settings {    
         private bool aGCThreshold;
         private AttenuationLevelEnum attenuation;
-
+/*
         [DisplayName("OmniRig enabled")]
         [Description("Enables support for OmniRig v 1.xx")]
         [DefaultValue(false)]
@@ -57,11 +57,12 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
         [TypeConverter(typeof(EnumDescriptionConverter))]
         [DefaultValue(RigEnum.RIG1)]
         public RigEnum RigNumber { get; set; }
-
+*/
         [DisplayName("Sampling Rate")]
         [Description("Receiver's output sampling rate")]
         [DefaultValue(192000)]
         [TypeConverter(typeof(SamplerateValueConverter))]
+
         public int SamplingRate { get; set; }
 
         [DisplayName("Device serial number")]
