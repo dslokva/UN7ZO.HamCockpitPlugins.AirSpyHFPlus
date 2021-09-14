@@ -14,7 +14,7 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
 
         public int SAMPLING_RATE;
         private readonly RingBuffer buffer;
-        private OmniRigClient omnirig;
+        //private OmniRigClient omnirig;
         private int lastRXfreq;
         private bool allowedToChangeFreq = true;
      
@@ -25,7 +25,7 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
             buffer = new RingBuffer(SAMPLING_RATE);
             Format = new SignalFormat(SAMPLING_RATE, true, false, 1, -48000, 48000, 0);
             buffer.SamplesAvailable += (o, e) => SamplesAvailable?.Invoke(this, e);
-            this.Tuned += internallyTuned;
+            //this.Tuned += internallyTuned;
 
             device = AirspyHFDevice.GetInstance();
             device.SamplesAvailable += newSamples;           
@@ -43,7 +43,7 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
             }
         }
 
-        private void omniRigTuned(object sender, EventArgs e) {
+/*        private void omniRigTuned(object sender, EventArgs e) {
             if (omnirig != null && lastRXfreq / 10 != omnirig.RxFrequency/10 && allowedToChangeFreq) {
                 SetDialFrequency(omnirig.RxFrequency, 0);
                 lastRXfreq = omnirig.RxFrequency;
@@ -52,14 +52,14 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
             }
             allowedToChangeFreq = true;
         }
-
-        private void internallyTuned(object sender, EventArgs e) {
+*/
+/*        private void internallyTuned(object sender, EventArgs e) {
             if (omnirig != null && omnirig.RxFrequency != (int)GetDialFrequency(0)) {
                 allowedToChangeFreq = false; 
                 omnirig.RxFrequency = (int)GetDialFrequency(0);                
                 Debug.WriteLine("internallyTuned called, freq: " + (int)GetDialFrequency(0));
             }
-        }
+        }*/
 
         #region IPlugin
         public string Name => "AirSpyHF+ SDR";
@@ -82,14 +82,14 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
             buffer.Resize(SAMPLING_RATE);
             Format = new SignalFormat(SAMPLING_RATE, true, false, 1, -48000, 48000, 0);            
 
-            if (settings.OmniRigEnabled) {
+/*            if (settings.OmniRigEnabled) {
                 omnirig = new OmniRigClient();
                 if (omnirig != null) {
                     omnirig.RigNo = (int)(settings.RigNumber + 1);
                     omnirig.Tuned += omniRigTuned;
                     Debug.WriteLine("OmniRig initialized succesfully.");
                 }
-            }  
+            } */ 
         }
 
         public bool Active {
@@ -116,8 +116,8 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
                     throw new ApplicationException("Cannot open AIRSPY HF+ Dual / Discovery device");                    
                 }
 
-                if (omnirig != null)
-                    omnirig.Active = true;
+/*                if (omnirig != null)
+                    omnirig.Active = true;*/
 
                 RefreshDeviceSettings();
                 device.Start(SAMPLING_RATE);
@@ -125,8 +125,8 @@ namespace UN7ZO.HamCockpitPlugins.AirSpyHFPlusSource {
 
             } else {
                 Debug.WriteLine("SetActive called - Stop section now!");
-                if (omnirig != null)
-                    omnirig.Active = false;
+/*                if (omnirig != null)
+                    omnirig.Active = false;*/
 
                 device.Dispose();
                 var exception = new Exception("Gracefully stopped SDR receiver.");
